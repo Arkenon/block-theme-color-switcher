@@ -12,7 +12,7 @@ module.exports = {
     ...defaultConfig,
     ...{
         entry: {
-            'chroma':  path.resolve( process.cwd(), 'src',   'chroma.js'   ),
+            'block-theme-color-switcher':  path.resolve( process.cwd(), 'src',   'block-theme-color-switcher.js'   ),
         },
         plugins: [
             // Include WP's plugin config.

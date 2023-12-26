@@ -8,56 +8,55 @@
  * Author URI:  https://kadimgultekin.com
  * License:     GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain: btc-switcher
+ * Text Domain: block-theme-color-switcher
  */
 
 // Prevent direct access to the file.
 defined( 'ABSPATH' ) || die( 'No script kiddies please!' );
 
+// Define constants
+$plugin_data = get_file_data( __FILE__, array( 'version'     => 'Version' ) );
+define( 'BLOCK_THEME_COLOR_SWITCHER_VERSION', $plugin_data['version'] );
+define( 'BLOCK_THEME_COLOR_SWITCHER_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+define( 'BLOCK_THEME_COLOR_SWITCHER_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+
 /**
  * Enqueue JavaScript for color switcher.
  */
-function btc_switcher_enqueue_script() {
+function block_theme_color_switcher_enqueue_script() {
 
-	$asset = include plugin_dir_path( __FILE__ ) . 'build/chroma.asset.php';
+	$asset = include BLOCK_THEME_COLOR_SWITCHER_PLUGIN_PATH . 'build/block-theme-color-switcher.asset.php';
 
 	wp_enqueue_script(
-		'btc-chroma',
-		plugin_dir_url( __FILE__ ) . 'build/chroma.js',
-		isset($asset['dependencies']) ? $asset['dependencies'] : array(), // Bağımlılıklar
-		isset($asset['version']) ? $asset['version'] : false,
+		'block-theme-color-switcher',
+		BLOCK_THEME_COLOR_SWITCHER_PLUGIN_URL . 'build/block-theme-color-switcher.js',
+		$asset['dependencies'] ?? array(),
+		$asset['version'] ?? BLOCK_THEME_COLOR_SWITCHER_VERSION,
 		true // Load in footer.
 	);
 
-	wp_enqueue_script(
-		'btc-switcher',
-		plugin_dir_url( __FILE__ ) . 'js/btc-switcher.js',
-		array('btc-chroma'), // Dependencies (e.g., jQuery).
-		'1.0.0',
-		true // Load in footer.
-	);
-
-	$palettes = btc_switcher_merge_color_palettes();
+	$palettes = block_theme_color_switcher_merge_color_palettes();
 	$palettes_json = json_encode($palettes);
 	$inline_script = "const palettes = ".$palettes_json.";";
-	wp_add_inline_script('btc-chroma', $inline_script , 'before');
+	wp_add_inline_script('block-theme-color-switcher', $inline_script , 'before');
 
-	$defaultColors = btc_switcher_get_theme_color_palette();
+	$defaultColors = block_theme_color_switcher_get_theme_color_palette();
 	$palettes_json2 = json_encode($defaultColors);
 	$inline_script2 = "const defaultColors = ".$palettes_json2.";";
-	wp_add_inline_script('btc-chroma', $inline_script2 , 'before');
+	wp_add_inline_script('block-theme-color-switcher', $inline_script2 , 'before');
 
 	wp_enqueue_style(
-		'btc-switcher',
-		plugin_dir_url( __FILE__ ) . 'css/btc-switcher.css',
+		'block-theme-color-switcher',
+		BLOCK_THEME_COLOR_SWITCHER_PLUGIN_URL . 'css/block-theme-color-switcher.css',
 		array(),
-		'1.0.0'
+		BLOCK_THEME_COLOR_SWITCHER_VERSION
 	);
+
 }
 
-add_action( 'wp_enqueue_scripts', 'btc_switcher_enqueue_script' );
+add_action( 'wp_enqueue_scripts', 'block_theme_color_switcher_enqueue_script' );
 
-function btc_switcher_enqueue_footer_script() {
+function block_theme_color_switcher_enqueue_footer_script() {
 	?>
 
 	<!-- Off-Canvas Menü -->
@@ -77,23 +76,20 @@ function btc_switcher_enqueue_footer_script() {
 	<?php
 }
 
-add_action( 'wp_footer', 'btc_switcher_enqueue_footer_script' );
+add_action( 'wp_footer', 'block_theme_color_switcher_enqueue_footer_script' );
 
 
-function btc_switcher_get_theme_color_palette() {
-	// theme.json dosyasının yolu
+function block_theme_color_switcher_get_theme_color_palette() {
+
 	$theme_json_path = get_template_directory() . '/theme.json';
 
-	// Dosyanın varlığını kontrol et
 	if (file_exists($theme_json_path)) {
-		// theme.json içeriğini oku
+
 		$theme_json = file_get_contents($theme_json_path);
 		$theme_data = json_decode($theme_json, true);
 
-		// Renk paletini al
 		$palette = $theme_data['settings']['color']['palette'] ?? [];
 
-		// CSS değişkenlerine dönüştür
 		$css_variables = [];
 		foreach ($palette as $color) {
 			$css_var_name = '--wp--preset--color--' . $color['slug'];
@@ -106,7 +102,8 @@ function btc_switcher_get_theme_color_palette() {
 	return [];
 }
 
-function btc_switcher_get_additional_color_palettes() {
+function block_theme_color_switcher_get_additional_color_palettes() {
+
 	$styles_dir = get_template_directory() . '/styles';
 	$palettes = [];
 
@@ -114,15 +111,18 @@ function btc_switcher_get_additional_color_palettes() {
 		$json_files = glob($styles_dir . '/*.json');
 
 		foreach ($json_files as $file) {
+
 			$content = file_get_contents($file);
 			$data = json_decode($content, true);
+            $palette_title = $data['title'];
 
 			if (isset($data['settings']['color']['palette'])) {
-				$palette_name = basename($file, '.json'); // Dosya adını palet adı olarak kullan
+
 				foreach ($data['settings']['color']['palette'] as $color) {
 					$css_var_name = '--wp--preset--color--' . $color['slug'];
-					$palettes[$palette_name][$css_var_name] = $color['color'];
+					$palettes[$palette_title][$css_var_name] = $color['color'];
 				}
+
 			}
 		}
 	}
@@ -130,20 +130,12 @@ function btc_switcher_get_additional_color_palettes() {
 	return $palettes;
 }
 
-function btc_switcher_merge_color_palettes() {
-	$theme_palette = btc_switcher_get_theme_color_palette(); // Tema JSON'dan alınan palet
-	$additional_palettes = btc_switcher_get_additional_color_palettes(); // /styles klasöründen alınan paletler
+function block_theme_color_switcher_merge_color_palettes() {
 
-	// Varsayılan paleti ilk palet olarak ekleyelim
-	$palettes = ["PALET_1" => $theme_palette];
+	$theme_palette = block_theme_color_switcher_get_theme_color_palette();
+	$additional_palettes = block_theme_color_switcher_get_additional_color_palettes();
 
-	// Ek paletleri numaralandırarak ekleyelim
-	$palette_number = 2;
-	foreach ($additional_palettes as $palette_name => $palette_colors) {
-		$palettes["PALET_" . $palette_number] = $palette_colors;
-		$palette_number++;
-	}
+	return array_merge(["Default" => $theme_palette,],$additional_palettes);
 
-	return $palettes;
 }
 

@@ -1,37 +1,3 @@
-import chroma from "chroma-js";
-
-function selectColors(palette) {
-    // Renkleri analiz edin
-    let analyzedColors = Object.values(palette).map(color => ({
-        color,
-        brightness: chroma(color).get('hsl.l')
-    }));
-
-    // Renkleri aydınlık seviyelerine göre sıralayın
-    analyzedColors.sort((a, b) => a.brightness - b.brightness);
-
-    // Arka plan ve yazı rengini seçin (en karanlık ve en aydınlık)
-    let color_bg = analyzedColors[0].color;
-    let color_text = analyzedColors[analyzedColors.length - 1].color;
-
-    // Ana ve ikincil renkleri seçin (orta tonlar)
-    let color_1 = analyzedColors[Math.floor(analyzedColors.length / 3)].color;
-    let color_2 = analyzedColors[Math.floor(2 * analyzedColors.length / 3)].color;
-
-    return { color_bg, color_text, color_1, color_2 };
-}
-
-let finalColors = {};
-// Tüm paletleri işleyin ve konsola yazdırın
-
-for (const paletteName in palettes) {
-    const palette = palettes[paletteName];
-    finalColors[paletteName] = selectColors(palette); // finalColors objesine anahtar-değer çifti olarak ekleyin
-}
-
-console.log(finalColors)
-// color-switcher.js
-// Tüm paletleri işleyin ve konsola yazdırın
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -99,30 +65,37 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
-function toggleColorSwitcherMenu() {
-    var menu = document.getElementById('colorSwitcherMenu');
-    menu.classList.toggle('open');
-}
 
-function changeColorPalette(paletteName) {
 
-    // Seçilen renk paletini al ve uygula
-    const selectedPalette = palettes[paletteName];
-    for (const [key, value] of Object.entries(selectedPalette)) {
-        document.documentElement.style.setProperty(key, value);
-        localStorage.setItem(key, value); // Renkleri local storage'a kaydet
+
+
+(function(window){
+    function changeColorPalette(paletteName) {
+
+        // Seçilen renk paletini al ve uygula
+        const selectedPalette = palettes[paletteName];
+        for (const [key, value] of Object.entries(selectedPalette)) {
+            document.documentElement.style.setProperty(key, value);
+            localStorage.setItem(key, value); // Renkleri local storage'a kaydet
+        }
+        // Tüm sayfayı güncelle
+        updatePageColors(selectedPalette);
     }
-    // Tüm sayfayı güncelle
-    updatePageColors(selectedPalette);
-}
 
-function updatePageColors(palette) {
-    const bodyElement = document.body; // body etiketini al
+    function updatePageColors(palette) {
+        const bodyElement = document.body; // body etiketini al
 
-    for (const [key, value] of Object.entries(palette)) {
-        // CSS değişkenlerini güncelle
-        bodyElement.style.setProperty(key, value);
+        for (const [key, value] of Object.entries(palette)) {
+            // CSS değişkenlerini güncelle
+            bodyElement.style.setProperty(key, value);
+        }
     }
-}
 
-
+    function toggleColorSwitcherMenu() {
+        var menu = document.getElementById('colorSwitcherMenu');
+        menu.classList.toggle('open');
+    }
+    window.changeColorPalette = changeColorPalette;
+    window.updatePageColors = updatePageColors;
+    window.toggleColorSwitcherMenu = toggleColorSwitcherMenu;
+})(window);
