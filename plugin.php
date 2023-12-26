@@ -62,7 +62,7 @@ function block_theme_color_switcher_enqueue_footer_script() {
 	<!-- Off-Canvas Menü -->
 	<div id="colorSwitcherMenu" class="off-canvas-menu">
         <div style="margin-bottom: 75px;margin-top: 75px;">
-            <h6 style="color:black;padding-left: 15px;">Renk Paletleri</h6>
+            <h6 style="color:black;padding-left: 15px;">Color Palettes <a style="font-size: 10px; cursor: pointer" onclick="removeSelectedPaletteData()">(Reset)</a></h6>
             <div class="palette-container">
             </div>
         </div>
@@ -70,7 +70,9 @@ function block_theme_color_switcher_enqueue_footer_script() {
 
 	<!-- Renk Paleti Seçici Butonu -->
 	<div id="colorPaletteSelector" style="position: fixed; right: 20px; bottom: 20px; cursor: pointer; z-index: 9999;">
-		<button class="off-canvas-button" onclick="toggleColorSwitcherMenu()">Select Color Palette</button>
+        <div class="wp-block-button">
+            <a class="wp-block-button__link wp-element-button off-canvas-button" onclick="toggleColorSwitcherMenu()" style="padding:15px;">⛶ Theme Colors</a>
+        </div>
 	</div>
 
 	<?php

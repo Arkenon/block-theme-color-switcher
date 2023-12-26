@@ -37,51 +37,32 @@
 
 
 .palette-container {
-    padding: 15px;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center; /* Yatay hizalama için */
-    align-items: center; /* Dikey hizalama için, ancak bu, tek satırlık flex container'lar için geçerlidir */
-    gap: 10px;
-    height: 100%; /* Container'ın tam yüksekliği */
+    flex-direction: column;
+    height: 100%;
+    padding: 20px;
 }
 
 .palette-box {
-    padding: 10px;
-    border-radius: 10px; /* Yuvarlatılmış köşeler */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px; /* Kutular arası boşluk */
+    text-align: left;
+    border: 1px solid #e3e3e3;
+    border-radius: 5px;
     cursor: pointer;
-    border: 1px solid gray;
-    height: 100px;
-    width: 100px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* Kutu gölgesi */
+    padding: 10px;
+    margin-bottom: 20px; /* Her palette-box arasında boşluk sağlar */
+    background-color: #ebe8e8;
+}
+.color-circle-text{
+    color: #454545;
 }
 
 .color-circle {
+    border: 1px solid lightgrey;
     width: 20px; /* Küçük kutuların genişliği */
     height: 20px; /* Küçük kutuların yüksekliği */
     border-radius: 50%; /* Yuvarlak şekil */
-}
-
-.color-circle .text {
-    display: block;
-    font-size: 20px;
-}
-
-#colorPaletteSelector button {
-    padding: 10px 15px;
-    background-color: #009E66;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-}
-
-#colorPaletteSelector button:hover {
-    background-color: #00B380;
+    display: inline-block; /* Renk dairelerini yan yana getirir */
+    margin-right: 10px; /* Renk daireleri arasında boşluk sağlar */
 }
 
 /* Responsive Tasarım */
