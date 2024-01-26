@@ -70,4 +70,7 @@
     .off-canvas-menu {
         width: 80%; /* Küçük ekranlarda tam genişlik */
     }
+    .switcher-btn-text{
+        display: none;
+    }
 }

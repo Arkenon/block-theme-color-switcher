@@ -71,7 +71,7 @@ function block_theme_color_switcher_enqueue_footer_script() {
 	<!-- Renk Paleti Seçici Butonu -->
 	<div id="colorPaletteSelector" style="position: fixed; right: 20px; bottom: 20px; cursor: pointer; z-index: 9999;">
         <div class="wp-block-button">
-            <a class="wp-block-button__link wp-element-button off-canvas-button" onclick="toggleColorSwitcherMenu()" style="padding:15px;">⛶ Theme Colors</a>
+            <a class="wp-block-button__link wp-element-button off-canvas-button" onclick="toggleColorSwitcherMenu()" style="padding:15px;">⛶ <span class="switcher-btn-text">Theme Colors</span></a>
         </div>
 	</div>
 
