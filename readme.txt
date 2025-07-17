@@ -1,10 +1,10 @@
 === Block Theme Color Switcher ===
 Contributors: arkenon
-Tags: gutenberg, block, block editor, colors, color palette, theme colors
+Tags: gutenberg, block themes, colors, color palette, theme colors
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 
