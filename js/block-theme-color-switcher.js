@@ -101,7 +101,13 @@ function updatePageColors(palette) {
 
 function toggleColorSwitcherMenu() {
     let menu = document.getElementById('colorSwitcherMenu');
+    let paletteSelector = document.getElementById('colorPaletteSelector');
     menu.classList.toggle('open');
+    if (menu.classList.contains('open')) {
+        if (paletteSelector) paletteSelector.style.display = 'none';
+    } else {
+        if (paletteSelector) paletteSelector.style.display = '';
+    }
 }
 
 window.removeSelectedPaletteData = removeSelectedPaletteData;
@@ -111,8 +117,10 @@ window.toggleColorSwitcherMenu = toggleColorSwitcherMenu;
 
 let button = document.querySelector('.off-canvas-button');
 let menu = document.querySelector('.off-canvas-menu');
+let paletteSelector = document.getElementById('colorPaletteSelector');
 document.addEventListener('click', function (event) {
     if (!menu.contains(event.target) && !button.contains(event.target)) {
         menu.classList.remove('open');
+        if (paletteSelector) paletteSelector.style.display = '';
     }
 });
