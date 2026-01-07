@@ -3,7 +3,7 @@
  * Plugin Name: Block Theme Color Switcher
  * Plugin URI: https://github.com/Arkenon/block-theme-color-switcher
  * Description: This plugin allows users to choose a color palette for the Block Theme from the frontend.
- * Version: 1.0.5
+ * Version: 1.0.6
  * Author: Kadim Gültekin
  * Author URI: https://kadimgultekin.com
  * License: GPL-2.0+
@@ -15,8 +15,7 @@
 defined('ABSPATH') || exit();
 
 // Define constants
-$plugin_data = get_file_data(__FILE__, array('version' => 'Version'));
-define('BLOCK_THEME_COLOR_SWITCHER_VERSION', $plugin_data['version']);
+define('BLOCK_THEME_COLOR_SWITCHER_VERSION', get_file_data(__FILE__, array('version' => 'Version')));
 define('BLOCK_THEME_COLOR_SWITCHER_PLUGIN_PATH', plugin_dir_path(__FILE__));
 define('BLOCK_THEME_COLOR_SWITCHER_PLUGIN_URL', plugin_dir_url(__FILE__));
 
@@ -220,12 +219,12 @@ if (!function_exists('block_theme_color_switcher_render_settings_page')) {
         $top_position = get_option('block_theme_color_switcher_top', '80');
         ?>
         <div class="wrap">
-            <h1><?php echo esc_html__('Block Theme Color Switcher Settings', '') ?></h1>
+            <h1><?php echo esc_html__('Block Theme Color Switcher Settings', 'block-theme-color-switcher') ?></h1>
             <form method="post" action="options.php">
                 <?php settings_fields('block_theme_color_switcher_options'); ?>
                 <table class="form-table">
                     <tr>
-                        <th scope="row"><?php echo esc_html__('Selector Button Text') ?></th>
+                        <th scope="row"><?php echo esc_html__('Selector Button Text', 'block-theme-color-switcher') ?></th>
                         <td>
                             <label>
                                 <input type="text" name="block_theme_color_switcher_button_text"
@@ -234,7 +233,7 @@ if (!function_exists('block_theme_color_switcher_render_settings_page')) {
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row"><?php echo esc_html__('Palette Selector Position') ?></th>
+                        <th scope="row"><?php echo esc_html__('Palette Selector Position', 'block-theme-color-switcher') ?></th>
                         <td>
                             <label>
                                 <select name="block_theme_color_switcher_position">
@@ -245,7 +244,7 @@ if (!function_exists('block_theme_color_switcher_render_settings_page')) {
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row"><?php echo esc_html__('Palette Selector Height From Top (%)') ?></th>
+                        <th scope="row"><?php echo esc_html__('Palette Selector Height From Top (%)', 'block-theme-color-switcher') ?></th>
                         <td>
                             <label>
                                 <input type="number" name="block_theme_color_switcher_top"
