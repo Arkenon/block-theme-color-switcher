@@ -2,9 +2,9 @@
 Contributors: arkenon
 Tags: gutenberg, block themes, colors, color palette, theme colors
 Requires at least: 6.0
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.6
+Stable tag: 1.0.7
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -45,6 +45,9 @@ WordPress Block Themes (Full Site Editing) are powerful, often coming with multi
 
 
 == Changelog ==
+
+= 1.0.7 =
+Tested: For WordPress 7.0 compatibility.
 
 = 1.0.6 =
 Tested: For WordPress 6.9 compatibility.

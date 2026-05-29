@@ -3,7 +3,7 @@
  * Plugin Name: Block Theme Color Switcher
  * Plugin URI: https://github.com/Arkenon/block-theme-color-switcher
  * Description: This plugin allows users to choose a color palette for the Block Theme from the frontend.
- * Version: 1.0.6
+ * Version: 1.0.7
  * Author: Kadim Gültekin
  * Author URI: https://kadimgultekin.com
  * License: GPL-2.0+
